@@ -64,6 +64,7 @@ settings.register(
 
 providers = (
     'local',
+    'cas',
     'AOL',
     'Blogger',
     'ClaimID',
@@ -83,7 +84,7 @@ providers = (
     'identi.ca',
 )
 
-need_extra_setup = ('Twitter', 'Facebook', 'LinkedIn', 'identi.ca',)
+need_extra_setup = ('Twitter', 'Facebook', 'LinkedIn', 'identi.ca', 'cas',)
 
 for provider in providers:
     kwargs = {

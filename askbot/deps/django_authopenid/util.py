@@ -489,6 +489,19 @@ def get_enabled_major_login_providers():
         'icon_media_path': '/jquery-openid/images/openid.gif',
         'openid_endpoint': None,
     }
+
+    data['cas'] = {
+        'name': 'cas',
+        'display_name' : 'CAS',
+        'type': 'cas',
+        'extra_token_name': _('Cas'),
+        'icon_media_path': '/jquery-openid/images/openid.gif',
+        'cas_server' : askbot_settings.CAS_SERVER,
+        'service_url' : askbot_settings.CAS_SERVICE_URL,
+        'proxy_url' : askbot_settings.CAS_PROXY_URL,
+        'proxy_callback_url' : askbot_settings.CAS_PROXY_CALLBACK_URL
+        }
+    
     return filter_enabled_providers(data)
 get_enabled_major_login_providers.is_major = True
 get_enabled_major_login_providers = add_custom_provider(get_enabled_major_login_providers)
@@ -848,3 +861,23 @@ def ldap_check_password(username, password):
     except ldap.LDAPError, e:
         logging.critical(unicode(e))
         return False
+
+
+
+def cas_validateTicket(request):
+    """
+    CAS Login : Phase 2/3 After returning from a CAS Login, this request will contain a ticket
+    cas_serviceValidate is called to validate the user's ticket
+    and the user is returned to 'sendback' (Authorized) or 'login' (Unauthorized) screen
+    (Optional - Phase 3/3 - With the username and proxyTicket, a user can be re-authorized.)
+    """
+    import caslib
+    if not request.GET.has_key('ticket'):
+        return False
+    caslib.cas_setReturnLocation(request.GET['sendback'])
+    cas_response = caslib.cas_serviceValidate(request.GET['ticket'])
+    (truth, user, pgtIou) = (cas_response.success, cas_response.map[cas_response.type].get('user',None), cas_response.map[cas_response.type].get('proxyGrantingTicket',""))
+    if not truth or not user:
+        return False
+    return user, pgtIou
+    

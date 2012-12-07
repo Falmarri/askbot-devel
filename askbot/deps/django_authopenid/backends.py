@@ -41,6 +41,7 @@ class AuthBackend(object):
                 facebook_user_id = None,#user with facebook
                 wordpress_url = None, # required for self hosted wordpress
                 wp_user_id = None, # required for self hosted wordpress
+                cas_ticket = None, # the CAS ticket
                 method = None,#requried parameter
             ):
         """this authentication function supports many login methods
@@ -197,7 +198,40 @@ class AuthBackend(object):
                         user = assoc.user
                     else:
                         return None
+        elif method == 'cas':
+            import caslib
+            cas_response = caslib.cas_serviceValidate(cas_ticket)
+            success, _user = cas_response.map[cas_response.type].get('user',None)
 
+            if success:
+                try:
+                    assoc = UserAssociation.objects.get(
+                                            openid_url = _user + '@ldap',
+                                            provider_name = 'ldap'
+                                            )
+                    user = assoc.user
+                except UserAssociation.DoesNotExist:
+                    user = User()
+                    user.username = _user
+                    user.set_unusable_password()
+                    user.is_staff = False
+                    user.is_superuser = False
+                    user.is_active = True
+                    user.save()
+                    user_registered.send(None, user = user)
+                    LOG.info('Created New User : [{0}]'.format(_user))
+                    
+                    assoc = UserAssociation()
+                    assoc.user = _user
+                    assoc.openid_url = _user + '@ldap'
+                    assoc.provider_name = 'ldap'
+                    assoc.save()
+
+            else:
+                return None
+
+            
+        
         elif method == 'wordpress_site':
             try:
                 custom_wp_openid_url = '%s?user_id=%s' % (wordpress_url, wp_user_id)

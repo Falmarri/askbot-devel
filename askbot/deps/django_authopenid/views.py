@@ -338,6 +338,13 @@ def signin(request, template_name='authopenid/signin.html'):
     template : authopenid/signin.htm
     """
     logging.debug('in signin view')
+
+
+    if askbot_settings.USE_CAS_FOR_PASSWORD_LOGIN:
+
+        pass
+
+    
     on_failure = signin_failure
 
     #we need a special priority on where to redirect on successful login
@@ -423,6 +430,7 @@ def signin(request, template_name='authopenid/signin.html'):
                             else:
                                 login_form.set_password_login_error()
                             #return HttpResponseRedirect(request.path)
+
                 else:
                     if password_action == 'login':
                         user = authenticate(
