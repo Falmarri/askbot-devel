@@ -862,7 +862,10 @@ def ldap_check_password(username, password):
         logging.critical(unicode(e))
         return False
 
-
+def cas_loginRedirect(request, redirect=None):
+    if not redirect:
+        redirect = request.get_full_path()
+    return HttpResponseRedirect(settings.CAS_SERVER+"/cas/login?service="+settings.SERVER_URL+"/CAS_serviceValidater?sendback="+redirect)
 
 def cas_validateTicket(request):
     """

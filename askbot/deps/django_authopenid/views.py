@@ -341,7 +341,7 @@ def signin(request, template_name='authopenid/signin.html'):
 
 
     if askbot_settings.USE_CAS_FOR_PASSWORD_LOGIN:
-
+        util.cas_loginRedirect(request)
         pass
 
     
