@@ -330,7 +330,7 @@ def complete_oauth_signin(request):
 
 @csrf.csrf_protect
 def cas_signin(request):
-    _CAS_SERVER = 'auth.iplantcollaborative.org'
+    _CAS_SERVER = 'https://auth.iplantcollaborative.org'
     url = _CAS_SERVER+"/cas/login?service="+"http://panza.iplantc.org/account/CAS_serviceValidater?sendback=/"
     return HttpResponseRedirect(url)
 
