@@ -330,7 +330,7 @@ def complete_oauth_signin(request):
 
 @csrf.csrf_protect
 def cas_signin(request):
-    
+    logging.debug(django_settings.SERVICE_URL)
     url = django_settings.CAS_SERVER+"/cas/login?service="+django_settings.SERVICE_URL
     return HttpResponseRedirect(url)
 
