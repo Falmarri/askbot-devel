@@ -330,8 +330,9 @@ def complete_oauth_signin(request):
 
 @csrf.csrf_protect
 def cas_signin(request):
+    
     _CAS_SERVER = 'https://auth.iplantcollaborative.org'
-    url = _CAS_SERVER+"/cas/login?service="+"http://panza.iplantc.org/account/CAS_serviceValidater?sendback=/"
+    url = _CAS_SERVER+"/cas/login?service="+"http://panza.iplantc.org:8080/account/CAS_serviceValidater?sendback=/"
     return HttpResponseRedirect(url)
 
 
@@ -350,7 +351,7 @@ def cas_validateTicket(request):
         login(request, user)
         return HttpResponseRedirect(request.GET['sendback'])
     else:
-        pass
+        return HttpResponseRedirect('/')
 
 
 #@not_authenticated
