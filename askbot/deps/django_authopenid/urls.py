@@ -7,6 +7,8 @@ urlpatterns = patterns('askbot.deps.django_authopenid.views',
     url(r'^yadis.xrdf$', 'xrdf', name='yadis_xrdf'),
      # manage account registration
     url(r'^%s$' % _('signin/'), 'signin', name='user_signin'),
+    url(r'^%s$' % _('cas_signin/'), 'cas_signin', name='cas_signin'),
+    url(r'^%s$' % _('CAS_serviceValidater'), 'cas_validateTicket'),
     url(r'^%s$' % _('widget/signin/'), 'signin',
         {'template_name': 'authopenid/widget_signin.html'},
         name='widget_signin'),
