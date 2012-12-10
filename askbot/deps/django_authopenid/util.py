@@ -10,6 +10,7 @@ from openid.association import Association as OIDAssociation
 from openid.extensions import sreg
 from openid import store as openid_store
 import oauth2 as oauth
+from django.http import HttpResponseRedirect
 
 from django.db.models.query import Q
 from django.conf import settings

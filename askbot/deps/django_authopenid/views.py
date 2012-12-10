@@ -53,6 +53,7 @@ from askbot.mail import send_mail
 from recaptcha_works.decorators import fix_recaptcha_remote_ip
 from askbot.deps.django_authopenid.ldap_auth import ldap_create_user
 from askbot.deps.django_authopenid.ldap_auth import ldap_authenticate
+from askbot.deps.django_authopenid.cas_auth import cas_get_or_create_user
 from askbot.utils.loading import load_module
 from urlparse import urlparse
 
@@ -326,6 +327,32 @@ def complete_oauth_signin(request):
         request.user.message_set.create(message = msg)
         return HttpResponseRedirect(next_url)
 
+
+@csrf.csrf_protect
+def cas_signin(request):
+    _CAS_SERVER = 'auth.iplantcollaborative.org'
+    url = _CAS_SERVER+"/cas/login?service="+"http://panza.iplantc.org/CAS_serviceValidater?sendback=/"
+    return HttpResponseRedirect(url)
+
+
+def cas_validateTicket(request):
+    import caslib
+    if not request.GET.has_key('ticket'):
+        return HttpResponseRedirect('/')
+    caslib.cas_setServiceURL("/CAS_serviceValidater?sendback="+request.GET['sendback'])
+    cas_response = caslib.cas_serviceValidate(request.GET['ticket'])
+    (truth, resp) = (cas_response.success, cas_response.map[cas_response.type])
+    if cas_response.success:
+        
+        user = cas_get_or_create_user(resp)
+        user = authenticate(method='force', user_id=user.id)
+        assert(user is not None)
+        login(request, user)
+        return HttpResponseRedirect(request.GET['sendback'])
+    else:
+        pass
+
+
 #@not_authenticated
 @csrf.csrf_protect
 def signin(request, template_name='authopenid/signin.html'):
@@ -340,11 +367,7 @@ def signin(request, template_name='authopenid/signin.html'):
     logging.debug('in signin view')
 
 
-    if askbot_settings.USE_CAS_FOR_PASSWORD_LOGIN:
-        util.cas_loginRedirect(request)
-        pass
-
-    
+   
     on_failure = signin_failure
 
     #we need a special priority on where to redirect on successful login
