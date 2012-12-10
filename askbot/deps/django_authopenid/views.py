@@ -344,7 +344,7 @@ def cas_validateTicket(request):
     (truth, resp) = (cas_response.success, cas_response.map[cas_response.type])
     if cas_response.success:
         
-        user = cas_get_or_create_user(resp)
+        user = cas_get_or_create_user(resp).user
         user = authenticate(method='force', user_id=user.id)
         assert(user is not None)
         login(request, user)

@@ -12,6 +12,7 @@ def cas_get_or_create_user(cas_response):
     """
     # create new user in local db
     try:
+        logging.debug("Getting user association for %s", cas_response.get('user'))
         assoc = UserAssociation.objects.get(
             openid_url = cas_response.get('user') + '@ldap',
             provider_name = 'ldap'
@@ -29,7 +30,7 @@ def cas_get_or_create_user(cas_response):
         user.is_active = True
         user.save()
         user_registered.send(None, user = user)
-        LOG.info('Created New User : [{0}]'.format(cas_response.get('user')))
+        logging.debug('Created New User : [{0}]'.format(cas_response.get('user')))
 
         assoc = UserAssociation()
         assoc.user = user
