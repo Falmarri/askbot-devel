@@ -340,7 +340,7 @@ def cas_validateTicket(request):
     import caslib
     if not request.GET.has_key('ticket'):
         return HttpResponseRedirect('/')
-    caslib.cas_setServiceURL("/CAS_serviceValidater?sendback="+request.GET['sendback'])
+    #caslib.cas_setServiceURL("/CAS_serviceValidater?sendback="+request.GET['sendback'])
     cas_response = caslib.cas_serviceValidate(request.GET['ticket'])
     (truth, resp) = (cas_response.success, cas_response.map[cas_response.type])
     if cas_response.success:
