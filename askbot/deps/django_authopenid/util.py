@@ -496,11 +496,7 @@ def get_enabled_major_login_providers():
         'display_name' : 'CAS',
         'type': 'cas',
         'extra_token_name': _('Cas'),
-        'icon_media_path': '/jquery-openid/images/openid.gif',
-        'cas_server' : askbot_settings.CAS_SERVER,
-        'service_url' : askbot_settings.CAS_SERVICE_URL,
-        'proxy_url' : askbot_settings.CAS_PROXY_URL,
-        'proxy_callback_url' : askbot_settings.CAS_PROXY_CALLBACK_URL
+        'icon_media_path': '/jquery-openid/images/openid.gif'
         }
     
     return filter_enabled_providers(data)
