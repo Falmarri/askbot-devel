@@ -8,15 +8,6 @@ import hashlib, random, sys, os, time
 __all__ = ['Nonce', 'Association', 'UserAssociation', 
         'UserPasswordQueueManager', 'UserPasswordQueue']
 
-class UserProxy(models.Model):
-    """
-    This model will be used to Map usernames, initially unknown, to proxy IOU ID ticket pairs
-    """
-    username = models.CharField(max_length=128, blank=True, null=True)
-    proxyIOU = models.CharField(max_length=40)
-    proxyTicket = models.CharField(max_length=70)
-
-
 class Nonce(models.Model):
     """ openid nonce """
     server_url = models.CharField(max_length=255)
