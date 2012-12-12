@@ -802,9 +802,9 @@ class Post(models.Model):
         if self.is_question():
             return self.thread.title
         elif self.is_answer() or self.is_reject_reason():
-            return self.html
+            return self.summary
         elif self.is_comment() or self.is_tag_wiki():
-            return self.text           
+            return self.summary           
         raise NotImplementedError
 
     def save(self, *args, **kwargs):
