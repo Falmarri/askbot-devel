@@ -108,7 +108,7 @@ def print_progress(elapsed, total, nowipe = False):
     a backspace character to have the number increment
     in-place"""
     output = '%6.2f%%' % (100 * float(elapsed)/float(total))
-    print_action(elapsed, nowipe)
+    print_action(output, nowipe)
 
 class ProgressBar(object):
     """A wrapper for an iterator, that prints 
