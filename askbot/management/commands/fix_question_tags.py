@@ -70,8 +70,11 @@ class Command(NoArgsCommand):
 
             transaction.commit()
             checked_count += 1
-            #progress = 100*float(checked_count)/float(total_count)
-            console.print_progress(checked_count, total_count)
+            progress = 100*float(checked_count)/float(total_count)
+            try:
+                console.print_action(progress)
+            except Exception as e:
+                print e
         print FORMAT_STRING % 100
         if found_count:
             print '%d problem questions found, tag records restored' % found_count
