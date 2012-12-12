@@ -9,10 +9,16 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Deleting field 'AnonymousQuestion.summary'
-        db.delete_column('askbot_anonymousquestion', 'summary')
+        try:
+            db.delete_column('askbot_anonymousquestion', 'summary')
+        except:
+            pass
 
         # Deleting field 'AnonymousAnswer.summary'
-        db.delete_column('askbot_anonymousanswer', 'summary')
+        try:
+            db.delete_column('askbot_anonymousanswer', 'summary')
+        except:
+            pass
 
     def backwards(self, orm):
         # Adding field 'AnonymousQuestion.summary'
