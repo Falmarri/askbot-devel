@@ -70,7 +70,7 @@ class Command(NoArgsCommand):
 
             transaction.commit()
             checked_count += 1
-            progress = 100*float(checked_count)/float(total_count)
+            progress = '%6.2f%%' % (100*float(checked_count)/float(total_count))
             try:
                 console.print_action(progress)
             except Exception as e:
