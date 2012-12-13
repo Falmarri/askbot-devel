@@ -10,14 +10,7 @@
                 {% endif %}
             {% endif %}
             {# class was searchInput #}
-            <input 
-                class="searchInput" 
-                type="text" 
-                autocomplete="off"
-                value="{{ query|default_if_none('') }}" 
-                name="query" 
-                id="keywords"
-            />
+
                 <input type="submit" value="" name="search" class="searchBtn" />
                 <input type="button"
                     value="X"
@@ -26,6 +19,14 @@
                     {% if not query %}{# query is only defined by questions view (active_tab) #}
                         style="display: none;"
                     {% endif %}
+                />
+                <input
+                    class="searchInput"
+                    type="text"
+                    autocomplete="off"
+                    value="{{ query|default_if_none('') }}"
+                    name="query"
+                    id="keywords"
                 />
                 {# clears button floats #}
                 <div class="clearfix"></div>
