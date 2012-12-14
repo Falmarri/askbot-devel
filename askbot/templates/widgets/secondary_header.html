@@ -23,6 +23,7 @@
 
                 <a id="homeButton" href="{% url questions %}"></a>
                 {% include "widgets/scope_nav.html" %}
+                {% include "widgets/search_bar.html" %} {# include search form widget #}
                 {% include "widgets/ask_button.html" %}
                 {# 
                     three buttons below are in the opposite order because
@@ -31,7 +32,7 @@
         
 
             </div>
-            {% include "widgets/search_bar.html" %} {# include search form widget #}
+
         </form>
     </div>
 </div>
