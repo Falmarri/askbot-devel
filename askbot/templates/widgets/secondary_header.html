@@ -20,9 +20,10 @@
                     Search bar may have padding on the left and right
                     to accomodate the buttons.
                 #}
-                {% include "widgets/ask_button.html" %}
+
                 <a id="homeButton" href="{% url questions %}"></a>
-                {% include "widgets/scope_nav.html" %}            
+                {% include "widgets/scope_nav.html" %}
+                {% include "widgets/ask_button.html" %}
                 {# 
                     three buttons below are in the opposite order because
                     they are floated at the right
