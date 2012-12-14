@@ -11,15 +11,8 @@
             {% endif %}
             {# class was searchInput #}
 
-                <input type="submit" value="" name="search" class="searchBtn" />
-                <input type="button"
-                    value="X"
-                    name="reset_query"
-                    class="cancelSearchBtn"
-                    {% if not query %}{# query is only defined by questions view (active_tab) #}
-                        style="display: none;"
-                    {% endif %}
-                />
+
+
                 <input
                     class="searchInput"
                     type="text"
@@ -28,6 +21,16 @@
                     name="query"
                     id="keywords"
                 />
+                
+                <input type="button"
+                    value="X"
+                    name="reset_query"
+                    class="cancelSearchBtn"
+                    {% if not query %}{# query is only defined by questions view (active_tab) #}
+                        style="display: none;"
+                    {% endif %}
+                />
+                <input type="submit" value="" name="search" class="searchBtn" />
                 {# clears button floats #}
                 <div class="clearfix"></div>
 </div>
