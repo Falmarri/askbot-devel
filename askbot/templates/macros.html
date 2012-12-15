@@ -418,10 +418,10 @@ for the purposes of the AJAX comment editor #}
                     >
                         <span class="delete-icon" title="{% trans %}delete this comment{% endtrans %}"></span>
                     </div>
-                    <div class="comment-body">
+                    <article class="comment-body">
                         {{comment.html}}
                         <a class="author" href="{{comment.author.get_profile_url()}}">{{comment.author.username|escape}}</a>
-                        <span class="age">&nbsp;({{ timeago(comment.added_at) }})</span>
+                        <time class="age" datetime="{{comment.added_at}}>&nbsp;({{ timeago(comment.added_at) }})</time>
                         <a id="post-{{comment.id}}-edit"
                             class="edit">{% trans %}edit{% endtrans %}</a>
                         <form action="{% url comment_to_answer %}" method="POST" accept-charset="utf-8" class='convert-comment'>
@@ -429,7 +429,7 @@ for the purposes of the AJAX comment editor #}
                           <input type="hidden" value="{{comment.id}}" name="comment_id" id="id_comment_id">
                           <input type="submit" value="{% trans %}convert to answer{% endtrans %}">
                         </form>
-                    </div>
+                    </article>
                 </div>
                 <script type="text/javascript">
                     askbot['functions']['hideConvertLinks']();
