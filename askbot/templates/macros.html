@@ -775,8 +775,8 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
     {% endif %}
 {%- endmacro -%}
 
-{%- macro timeago(datetime_object) -%}
-        {{datetime_object.replace(microsecond=0)|add_tz_offset}}
+{%- macro timeago(datetime_object, classes='', pubdate='' ) -%}
+        <time datetime="datetime_object" class="timeago {{classes}}" {{pubdate}}>{{datetime_object.replace(microsecond=0)|add_tz_offset}}</time>
 {%- endmacro -%}
 
 {% macro one_shot_form_js(form=None, submit_button=None) %}
