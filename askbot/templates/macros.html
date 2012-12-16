@@ -92,7 +92,7 @@ poor design of the data or methods on data objects #}
            {% else %}
                 {%- trans %}posted{% endtrans %}
            {% endif %}
-           <time datetime="{{post.added_at}}" pubdate>{{ timeago(post.added_at) }}</time>
+           <time class="timeago" datetime="{{post.added_at}}" pubdate>{{ timeago(post.added_at) }}</time>
         </p>
         <img width="35" height="35"
             src="{{'/images/wiki.png'|media}}"
@@ -112,9 +112,9 @@ poor design of the data or methods on data objects #}
                 {% trans %}posted{% endtrans %}
             {% endif %}
             {% if post.__class__.__name__ == 'PostRevision' %}
-                <time datetime="{{post.revised_at}}">{{ timeago(post.revised_at) }}</time>
+                <time class="timeago" datetime="{{post.revised_at}}">{{ timeago(post.revised_at) }}</time>
             {% else %}
-                <time datetime="{{post.added_at}}" pubdate>{{ timeago(post.added_at) }}</time>
+                <time class="timeago" datetime="{{post.added_at}}" pubdate>{{ timeago(post.added_at) }}</time>
             {% endif %}
         </p>
         {{ post_contributor_avatar_and_credentials(
@@ -141,7 +141,7 @@ poor design of the data or methods on data objects #}
         {% else %}
             href="{% url answer_revisions post.id %}"
         {% endif %}
-            >{% trans %}updated{% endtrans %} <time datetime="{{last_edited_at}}">{{ timeago(last_edited_at) }}</time></a>
+            >{% trans %}updated{% endtrans %} <time class="timeago" datetime="{{last_edited_at}}">{{ timeago(last_edited_at) }}</time></a>
         </p>
         {% if original_author != update_author or is_wiki %}
             {{ 
@@ -421,7 +421,7 @@ for the purposes of the AJAX comment editor #}
                     <article class="comment-body">
                         {{comment.html}}
                         <a class="author" href="{{comment.author.get_profile_url()}}">{{comment.author.username|escape}}</a>
-                        <time class="age" datetime="{{comment.added_at}}" pubdate>&nbsp;({{ timeago(comment.added_at) }})</time>
+                        <time class="age timeago" datetime="{{comment.added_at}}" pubdate>&nbsp;({{ timeago(comment.added_at) }})</time>
                         <a id="post-{{comment.id}}-edit"
                             class="edit">{% trans %}edit{% endtrans %}</a>
                         <form action="{% url comment_to_answer %}" method="POST" accept-charset="utf-8" class='convert-comment'>
@@ -776,9 +776,7 @@ answer {% if answer.accepted() %}accepted-answer{% endif %} {% if answer.author_
 {%- endmacro -%}
 
 {%- macro timeago(datetime_object) -%}
-    <abbr class="timeago" title="{{datetime_object.replace(microsecond=0)|add_tz_offset}}">
         {{datetime_object.replace(microsecond=0)|add_tz_offset}}
-    </abbr>
 {%- endmacro -%}
 
 {% macro one_shot_form_js(form=None, submit_button=None) %}

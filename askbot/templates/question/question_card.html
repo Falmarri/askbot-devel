@@ -1,13 +1,14 @@
 
 <section id="post-id-{{question.id}}" class="question-content{% if question.deleted %} deleted{% endif %}">
-    <div class="vote-buttons">
+    <aside class="vote-buttons">
         {% include "question/question_vote_buttons.html" %}
         {% include "question/share_buttons.html" %}
-    </div>
-    <section>
+    </aside>
+    <div>
+    <header>
     <h1><a href="{{ question.get_absolute_url() }}">{{ thread.get_title(question)|escape }}</a></h1>
     {% include "question/question_tags.html" %}
-
+    </header>
     <div id="question-table">
         <article class="question-body">
             <div class="post-update-info-container">
@@ -33,6 +34,6 @@
         {% endif %}
         {% include "question/question_comments.html" %}
     </div>
-    </section>
+    </div>
 </section>
 
