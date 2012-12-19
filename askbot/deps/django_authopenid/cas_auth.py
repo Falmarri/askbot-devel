@@ -19,14 +19,19 @@ def cas_get_or_create_user(cas_response):
         )
         return assoc
     except UserAssociation.DoesNotExist:
-        user = User()
+
+        try:
+            user = User.objects.get(username=cas_response.get('user'))
+        except User.DoesNotExist:
+
+            user = User()
         user.username = cas_response.get('django_username', cas_response.get('user'))
         user.set_unusable_password()
-        
+
         user.first_name = cas_response['attributes'].get('firstName', None)
-        
+
         user.last_name = cas_response['attributes'].get('lastName', None)
-      
+
         user.email = cas_response['attributes'].get('email', None)
         user.is_staff = False
         user.is_superuser = False

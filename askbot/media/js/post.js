@@ -1779,7 +1779,7 @@ Comment.prototype.setContent = function(data){
     }
     this._element.append(this._comment_delete);
 
-    this._comment_body = $('<div class="comment-body"></div>');
+    this._comment_body = $('<article class="comment-body"></article>');
     this._comment_body.html(this._data['html']);
     //this._comment_body.append(' &ndash; ');
 
@@ -1789,8 +1789,9 @@ Comment.prototype.setContent = function(data){
     this._comment_body.append(this._user_link);
 
     this._comment_body.append(' (');
-    this._comment_added_at = $('<abbr class="timeago"></abbr>');
+    this._comment_added_at = $('<time class="timeago" pubdate="pubdate"></time>');
     this._comment_added_at.html(this._data['comment_added_at']);
+    this._comment_added_at.attr('datetime', this._data['comment_added_at']);
     this._comment_added_at.attr('title', this._data['comment_added_at']);
     this._comment_added_at.timeago();
     this._comment_body.append(this._comment_added_at);
