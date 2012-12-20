@@ -880,7 +880,7 @@ def read_message(request):#marks message a read
         if request.POST['formdata'] == 'required':
             request.session['message_silent'] = 1
             if request.user.is_authenticated():
-                request.user.delete_messages()
+                request.user.get_and_delete_messages()
     return HttpResponse('')
 
 
